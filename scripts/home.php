@@ -3,17 +3,6 @@
 defined('CONTROL') or die('Acesso negado!');
 $server = new Query_functions();
 $allData = $server->buscar_tudo();
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Verifica se o botão de delete foi pressionado
-    if (isset($_POST['deleteBtn']) && isset($_POST['contactId'])) {
-        $id = $_POST['contactId']; // Captura o ID do contato a ser excluído
-        $server->excluir_contato($id);
-    }
-} elseif (isset($_GET['deleteId'])) {
-    $id = $_GET['deleteId']; // Captura o ID do contato a ser excluído
-    $server->excluir_contato($id);
-}
    
 ?>
 
@@ -52,18 +41,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 <td><?= $data->phone ?></td>
                                 <td><?= $data->email ?></td>
                                 <td class="d-flex justify-content-evenly">
-                                    <form method="post">
+                                    <form method="post" action="scripts/edit.php">
+                                        <input type="hidden" name="idUser" value="<?=$data->id?>">
                                         <button class="fa-solid fa-pen btn bg-warning" aria-label="Edit" name="editBtn" type="submit"></button>
                                     </form>
-                                    <form method="post">
-                                        <!-- O formulário de deletar agora envia o ID na URL -->
-                                        <a href="?deleteId=<?= $data->id ?>" class="fa-solid fa-eraser btn bg-danger" aria-label="Delete"></a>
+                                    <form method="post" action="inc/delete.php">
+                                        <input type="hidden" name="idUser" value="<?=$data->id?>">
+                                        <button class="fa-solid fa-eraser btn bg-danger" aria-label="Delete" type="submit" name="deleteBtn"></button>
                                     </form>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
-
-
                     </tbody>
                 </table>
             </div>

@@ -1,6 +1,6 @@
 <?php 
 
-defined('CONTROL') or die('Acesso negado!'); 
+defined('CONTROL') or die('Acesso negado!');
 require_once('server.php');
 require_once('server_functions.php');
 

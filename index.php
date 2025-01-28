@@ -25,4 +25,9 @@ switch($route){
         require_once('scripts/404.php');
         require_once('inc/footer.php');
         break;
+    case 'edit':
+        require_once('inc/header.php');
+        require_once('scripts/edit.php');
+        require_once('inc/footer.php');
+        break;
 }

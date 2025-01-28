@@ -1,11 +1,12 @@
 <?php
 
 class Query_functions extends Server{
-    public function buscar_nome(){
-        try {
-            $query = $this->conectar()->query("SELECT name FROM principal");
 
-            return $query->fetchAll(PDO::FETCH_OBJ);
+    public function buscar_nome($id){
+        try {
+            $query = $this->conectar()->query("SELECT name FROM principal WHERE id = $id");
+
+            return $query->fetch(PDO::FETCH_ASSOC);
             $query = null;
         } catch (PDOException $err) {
             echo "Erro ao buscar nomes: " . $err->getMessage();
@@ -13,11 +14,11 @@ class Query_functions extends Server{
         }
     }
 
-    public function buscar_numero(){
+    public function buscar_numero($id){
         try {
-            $query = $this->conectar()->query("SELECT phone FROM principal");
+            $query = $this->conectar()->query("SELECT phone FROM principal WHERE id = $id");
 
-            return $query->fetchAll(PDO::FETCH_OBJ);
+            return $query->fetch(PDO::FETCH_ASSOC);
             $query = null;
         } catch (PDOException $err) {
             echo "Erro ao buscar números: " . $err->getMessage();
@@ -25,11 +26,11 @@ class Query_functions extends Server{
         } 
     }
 
-    public function buscar_email(){
+    public function buscar_email($id){
         try {
-            $query = $this->conectar()->query("SELECT email FROM principal");
+            $query = $this->conectar()->query("SELECT email FROM principal WHERE id = $id");
 
-            return $query->fetchAll(PDO::FETCH_OBJ);
+            return $query->fetch(PDO::FETCH_ASSOC);
             $query = null;
         } catch (PDOException $err) {
             echo "Erro ao buscar nomes: " . $err->getMessage();
@@ -81,6 +82,33 @@ class Query_functions extends Server{
             $query->bindParam(':name', $name, PDO::PARAM_STR);
             $query->bindParam(':phone', $phone, PDO::PARAM_STR);
             $query->bindParam(':email', $email, PDO::PARAM_STR);
+            
+            // Executa a consulta
+            $query->execute();
+            
+            // Encerra conexão
+            $query = null;
+            
+            // Retorna sucesso ou outros dados, se necessário
+            return true;
+            
+        } catch (PDOException $err) {
+            // Exibe o erro caso algo aconteça
+            echo "Erro ao adicionar contato: " . $err->getMessage();
+            return false;
+        }
+    }
+
+    public function atualizar_contato($id ,$name, $phone, $email) {
+        try {
+            // Prepara a consulta com parâmetros
+            $query = $this->conectar()->prepare("UPDATE principal SET name = :name, phone = :phone, email = :email WHERE id = :id");
+            
+            // Substitui os parâmetros pelos valores recebidos
+            $query->bindParam(':name', $name);
+            $query->bindParam(':phone', $phone);
+            $query->bindParam(':email', $email);
+            $query->bindParam(':id', $id, PDO::PARAM_INT);
             
             // Executa a consulta
             $query->execute();
