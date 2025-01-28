@@ -15,7 +15,7 @@ MyContactBase é um sistema simples de gerenciamento de contatos, desenvolvido e
 ![Screenshot 1](assets/screenshots/Screenshot_89.png)
 *Página inicial*
 -- **Banco de dados**
-![Screenshot 1](assets/screenshots/Screenshot_91.png)
+![Screenshot 1](assets/screenshots/Screenshot_92.png)
 *Banco de dados*
 
 ## Tecnologias Utilizadas
